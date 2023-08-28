@@ -19,7 +19,7 @@ return new class extends Migration {
 	 */
 	public function down(): void {
 		Schema::table('media', function (Blueprint $table) {
-			//
+			$table->dropColumn('order');
 		});
 	}
 };
