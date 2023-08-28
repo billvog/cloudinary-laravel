@@ -20,14 +20,14 @@ trait MediaAlly
      */
     public function medially()
     {
-        return $this->morphMany(Media::class, 'medially');
+        return $this->morphMany(Media::class, 'medially')->orderBy('order', 'asc');
     }
 
 
     /**
      * Attach Media Files to a Model
      */
-    public function attachMedia($file, $options = [])
+    public function attachMedia($file, $order = 0, $options = [])
     {
         if(! file_exists($file)) {
             throw new Exception('Please pass in a file that exists');
@@ -40,6 +40,7 @@ trait MediaAlly
         $media->file_url = $response->getSecurePath();
         $media->size = $response->getSize();
         $media->file_type = $response->getFileType();
+				$media->order = $order;
 
         $this->medially()->save($media);
     }
@@ -47,7 +48,7 @@ trait MediaAlly
     /**
      * Attach Rwmote Media Files to a Model
      */
-    public function attachRemoteMedia($remoteFile, $options = [])
+    public function attachRemoteMedia($remoteFile, $order = 0, $options = [])
     {
         $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile, $options);
 
@@ -56,6 +57,7 @@ trait MediaAlly
         $media->file_url = $response->getSecurePath();
         $media->size = $response->getSize();
         $media->file_type = $response->getFileType();
+				$media->order = $order;
 
         $this->medially()->save($media);
     }
