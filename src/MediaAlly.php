@@ -43,7 +43,7 @@ trait MediaAlly {
     }
 
     /**
-     * Attach Rwmote Media Files to a Model
+     * Attach Remote Media Files to a Model
      */
     public function attachRemoteMedia($remoteFile, $order = 0, $options = []) {
         $response = resolve(CloudinaryEngine::class)->uploadFile($remoteFile, $options);
